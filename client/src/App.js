@@ -1,5 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const top = () => (
   <div>
@@ -24,7 +31,7 @@ const page404 = () => (
 
 function App() {
   return (
-    <div className='App'>
+    <Wrapper>
       <Router>
         <Switch>
           <Route path='/' exact component={top} />
@@ -33,7 +40,7 @@ function App() {
           <Route exact component={page404} />
         </Switch>
       </Router>
-    </div>
+    </Wrapper>
   );
 }
 
