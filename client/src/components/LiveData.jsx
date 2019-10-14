@@ -8,17 +8,21 @@ const fetchLiveData = async setRates => {
   const res = await fetch(uri);
   const liveData = await res.json();
   const rates = liveData.rates;
-  setRates(rates);
+  if(rates) setRates(rates);
+};
+
+const ListCurrenry = props => {
+  console.log(props);
+  const { rates } = props;
+  return Object.keys(rates).map(key => <p>{key}: {rates[key]}</p>);
 };
 const LiveData = () => {
-  const [rates, setRates] = useState([]);
+  const [rates, setRates] = useState({});
   fetchLiveData(setRates);
   return (
     <>
       <h1>hello</h1>
-      <p>BTC: {rates.BTC || 'loading...'}</p>
-      <p>ETH: {rates.ETH || 'loading...'}</p>
-      <p>EOS: {rates.EOS || 'loading...'}</p>
+      <ListCurrenry rates={rates} />
     </>
   );
 };
