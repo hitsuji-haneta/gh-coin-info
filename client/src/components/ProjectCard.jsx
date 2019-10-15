@@ -29,10 +29,10 @@ const Name = styled.p`
   height: 20%;
 `;
 
-const ProjectCard = ({ id, name, image }) => {
-  console.log(image);
+const ProjectCard = ({ id, name, image, setProject }) => {
+  const clickCard = key => setProject(key);
   return (
-    <Wrapper>
+    <Wrapper onClick={() => clickCard(id)}>
       <ImageWrapper>
         <Image src={image} />
       </ImageWrapper>
