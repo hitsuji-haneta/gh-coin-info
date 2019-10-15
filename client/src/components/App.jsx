@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import LiveData from './LiveData';
+import ProjectList from './ProjectList';
 
 const Wrapper = styled.div`
   background-color: #282c34;
@@ -10,7 +11,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(14px + 2vmax);
   color: white;
 `;
 
@@ -32,10 +33,10 @@ const page404 = () => (
 
 const App = () => (
   <Wrapper>
+    <LiveData/>
     <Router>
       <Switch>
-        <Route path='/' exact component={LiveData} />
-        <Route path='/page1' exact component={page1} />
+        <Route path='/' exact component={ProjectList} />
         <Route path='/page2' exact component={page2} />
         <Route exact component={page404} />
       </Switch>
