@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import useCurrentTask from '../hooks/useCurrentTask';
 
-const uri =
-  'http://api.coinlayer.com/api/live?access_key=bd5f2c91e98cfd32c7c8a18671ea0510&symbols=BTC,ETH,EOS';
-
-const fetchLiveData = async setRates => {
-  console.log('fetch start');
-  const res = await fetch(uri);
-  const liveData = await res.json();
-  const rates = liveData.rates;
-  if(rates) setRates(rates);
+const zeroPadding = num => {
+  return ('00' + num).slice(-2);
 };
 
-const ListCurrenry = props => {
-  console.log(props);
-  const { rates } = props;
-  return Object.keys(rates).map(key => <p>{key}: {rates[key]}</p>);
-};
 const LiveData = () => {
-  const [rates, setRates] = useState({});
-  fetchLiveData(setRates);
+  const currentTask = useCurrentTask();
+  if (!currentTask.isRunning) return <></>;
+  const date = new Date(currentTask.duration);
+  const timeString = `
+    ${zeroPadding(date.getHours() - 9)}:
+    ${zeroPadding(date.getMinutes())}:
+    ${zeroPadding(date.getSeconds())}
+  `;
   return (
     <>
-      <h1>hello</h1>
-      <ListCurrenry rates={rates} />
+      <p>{currentTask.description}</p>
+      <p>{timeString}</p>
     </>
   );
 };
