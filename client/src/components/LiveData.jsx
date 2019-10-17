@@ -22,6 +22,7 @@ const LiveData = () => {
       <StartStop
         entryId={currentTask.entryId}
         isRunning={currentTask.isRunning}
+        setRunning={currentTask.setRunning}
       />
     </>
   );

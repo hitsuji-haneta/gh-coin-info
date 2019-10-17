@@ -41,7 +41,7 @@ const useCurrentTask = () => {
     };
     fetchData();
   }, []);
-  return { isRunning, duration, description, entryId };
+  return { isRunning, setRunning, duration, description, entryId };
 };
 
 export default useCurrentTask;

@@ -4,7 +4,7 @@ import togglConfig from '../toggl-config.json';
 const apiToken = togglConfig.apiToken;
 if (!apiToken) throw Error('Set your api token to toggle-config.json');
 
-const stopTimer = async entryId => {
+const stopTimer = async (entryId, setRunning) => {
   const encodedToken = btoa(`${apiToken}:api_token`);
   const uri = `https://www.toggl.com/api/v8/time_entries/${entryId}/stop`;
   const res = await fetch(uri, {
@@ -17,11 +17,12 @@ const stopTimer = async entryId => {
   const resJson = await res.json();
   const data = resJson.data;
   console.log(data);
+  setRunning(false);
 };
 
-const StartStop = ({ isRunning, entryId }) => {
+const StartStop = ({ isRunning, setRunning, entryId }) => {
   if (isRunning)
-    return <button onClick={() => stopTimer(entryId)}>stop</button>;
+    return <button onClick={() => stopTimer(entryId, setRunning)}>stop</button>;
   return <></>;
 };
 
