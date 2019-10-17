@@ -10,6 +10,7 @@ const useCurrentTask = () => {
   const [isRunning, setRunning] = useState(false);
   const [duration, setDuration] = useState(0);
   const [description, setDescription] = useState();
+  const [entryId, setEntryId] = useState();
 
   useEffect(() => {
     console.log('fetch start');
@@ -26,6 +27,7 @@ const useCurrentTask = () => {
       if (data) {
         setRunning(true);
         setDescription(data.description);
+        setEntryId(data.id);
         const startTime = new Date(data.start);
         const updateDuration = () => {
           const now = new Date();
@@ -39,7 +41,7 @@ const useCurrentTask = () => {
     };
     fetchData();
   }, []);
-  return { isRunning, duration, description };
+  return { isRunning, duration, description, entryId };
 };
 
 export default useCurrentTask;

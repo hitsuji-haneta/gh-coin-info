@@ -1,5 +1,6 @@
 import React from 'react';
 import useCurrentTask from '../hooks/useCurrentTask';
+import StartStop from './StartStop';
 
 const zeroPadding = num => {
   return ('00' + num).slice(-2);
@@ -18,6 +19,10 @@ const LiveData = () => {
     <>
       <p>{currentTask.description}</p>
       <p>{timeString}</p>
+      <StartStop
+        entryId={currentTask.entryId}
+        isRunning={currentTask.isRunning}
+      />
     </>
   );
 };
