@@ -6,10 +6,9 @@ const zeroPadding = num => {
   return ('00' + num).slice(-2);
 };
 
-const LiveData = () => {
-  const currentTask = useCurrentTask();
-  if (!currentTask.isRunning) return <></>;
-  const date = new Date(currentTask.duration);
+const Timer = ({ isRunning, duration, description }) => {
+  if (!isRunning) return <></>;
+  const date = new Date(duration);
   const timeString = `
     ${zeroPadding(date.getHours() - 9)}:
     ${zeroPadding(date.getMinutes())}:
@@ -17,8 +16,21 @@ const LiveData = () => {
   `;
   return (
     <>
-      <p>{currentTask.description}</p>
+      <p>{description}</p>
       <p>{timeString}</p>
+    </>
+  );
+};
+
+const LiveData = () => {
+  const currentTask = useCurrentTask();
+  return (
+    <>
+      <Timer
+        isRunning={currentTask.isRunning}
+        duration={currentTask.duration}
+        description={currentTask.description}
+      />
       <StartStop
         entryId={currentTask.entryId}
         isRunning={currentTask.isRunning}
