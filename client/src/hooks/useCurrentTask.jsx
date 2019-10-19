@@ -6,7 +6,7 @@ const apiToken = togglConfig.apiToken;
 if (!apiToken) throw Error('Set your api token to toggle-config.json');
 const uri = 'https://www.toggl.com/api/v8/time_entries/current';
 
-const useCurrentTask = () => {
+const useCurrentTask = currentState => {
   const [isRunning, setRunning] = useState(false);
   const [duration, setDuration] = useState(0);
   const [description, setDescription] = useState();
@@ -15,6 +15,7 @@ const useCurrentTask = () => {
   useEffect(() => {
     console.log('fetch start');
     const encodedToken = btoa(`${apiToken}:api_token`);
+    let timer;
     const fetchData = async () => {
       const res = await fetch(uri, {
         headers: {
@@ -34,13 +35,18 @@ const useCurrentTask = () => {
           const durationDate = new Date(now.getTime() - startTime.getTime());
           setDuration(durationDate.getTime());
         };
-        setInterval(updateDuration, 1000);
+        timer = setInterval(updateDuration, 1000);
       } else {
         setRunning(false);
+        setDuration(0);
       }
     };
     fetchData();
-  }, []);
+    return () => {
+      console.log('clear');
+      clearInterval(timer);
+    };
+  }, [currentState]);
   return { isRunning, setRunning, duration, description, entryId };
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useCurrentTask from '../hooks/useCurrentTask';
 import StartStop from './StartStop';
 
@@ -23,7 +23,8 @@ const Timer = ({ isRunning, duration, description }) => {
 };
 
 const LiveData = () => {
-  const currentTask = useCurrentTask();
+  const [currentState, setCurrentState] = useState(false);
+  const currentTask = useCurrentTask(currentState);
   return (
     <>
       <Timer
@@ -34,7 +35,7 @@ const LiveData = () => {
       <StartStop
         entryId={currentTask.entryId}
         isRunning={currentTask.isRunning}
-        setRunning={currentTask.setRunning}
+        setCurrentState={setCurrentState}
       />
     </>
   );

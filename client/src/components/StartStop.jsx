@@ -1,5 +1,5 @@
 import React from 'react';
-
+import useCurrentTask from '../hooks/useCurrentTask';
 import togglConfig from '../toggl-config.json';
 const apiToken = togglConfig.apiToken;
 if (!apiToken) throw Error('Set your api token to toggle-config.json');
@@ -10,7 +10,7 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
-const stopTimer = async (entryId, setRunning) => {
+const stopTimer = async (entryId, setCurrentState) => {
   const uri = `https://www.toggl.com/api/v8/time_entries/${entryId}/stop`;
   const res = await fetch(uri, {
     method: 'PUT',
@@ -19,10 +19,10 @@ const stopTimer = async (entryId, setRunning) => {
   const resJson = await res.json();
   const data = resJson.data;
   console.log(data);
-  setRunning(false);
+  setCurrentState('stop');
 };
 
-const startTimer = async setRunning => {
+const startTimer = async (setCurrentState) => {
   const uri = `https://www.toggl.com/api/v8/time_entries/start`;
   const data = {
     time_entry: {
@@ -39,13 +39,13 @@ const startTimer = async setRunning => {
   const resJson = await res.json();
   const resData = resJson.data;
   console.log(resData);
-  setRunning(true);
+  setCurrentState('running');
 };
 
-const StartStop = ({ isRunning, setRunning, entryId }) => {
+const StartStop = ({ isRunning, setCurrentState, entryId }) => {
   if (isRunning)
-    return <button onClick={() => stopTimer(entryId, setRunning)}>stop</button>;
-  return <button onClick={() => startTimer(setRunning)}>start</button>;
+    return <button onClick={() => stopTimer(entryId, setCurrentState)}>stop</button>;
+  return <button onClick={() => startTimer(setCurrentState)}>start</button>;
 };
 
 export default StartStop;
