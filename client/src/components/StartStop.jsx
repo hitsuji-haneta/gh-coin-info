@@ -42,9 +42,18 @@ const startTimer = async (setCurrentState) => {
   setCurrentState('running');
 };
 
+// const startTimer = async () => {
+//   const uri = `https://us-central1-toggl-nesthub.cloudfunctions.net/togglProxy-api`;
+//   const res = await fetch(uri);
+//   const resJson = await res.json();
+//   console.log(resJson);
+// };
+
 const StartStop = ({ isRunning, setCurrentState, entryId }) => {
   if (isRunning)
-    return <button onClick={() => stopTimer(entryId, setCurrentState)}>stop</button>;
+    return (
+      <button onClick={() => stopTimer(entryId, setCurrentState)}>stop</button>
+    );
   return <button onClick={() => startTimer(setCurrentState)}>start</button>;
 };
 

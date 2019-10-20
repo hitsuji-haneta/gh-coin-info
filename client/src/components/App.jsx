@@ -33,7 +33,7 @@ const page404 = () => (
 
 const App = () => (
   <Wrapper>
-    <LiveData/>
+    <LiveData />
     <Router>
       <Switch>
         <Route path='/' exact component={ProjectList} />
