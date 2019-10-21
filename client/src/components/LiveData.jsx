@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import useCurrentTask from '../hooks/useCurrentTask';
-import StartStop from './StartStop';
+import StartStop, { startTimer, stopTimer } from './StartStop';
+
+const interactiveCanvas = window.interactiveCanvas;
 
 const zeroPadding = num => {
   return ('00' + num).slice(-2);
@@ -25,6 +27,12 @@ const Timer = ({ isRunning, duration, description }) => {
 const LiveData = () => {
   const [currentState, setCurrentState] = useState(false);
   const currentTask = useCurrentTask(currentState);
+  interactiveCanvas.ready({
+    onUpdate(data) {
+      if (data.type === 'start') startTimer(setCurrentState);
+      if (data.type === 'stop') stopTimer(currentTask.entryId, setCurrentState);
+    }
+  });
   return (
     <>
       <Timer

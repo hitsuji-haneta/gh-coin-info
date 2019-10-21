@@ -10,7 +10,7 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
-const stopTimer = async (entryId, setCurrentState) => {
+export const stopTimer = async (entryId, setCurrentState) => {
   const uri = `https://us-central1-toggl-nesthub-256523.cloudfunctions.net/togglProxy/api/v8/time_entries/${entryId}/stop`;
   const res = await fetch(uri, {
     method: 'PUT',
@@ -22,7 +22,7 @@ const stopTimer = async (entryId, setCurrentState) => {
   setCurrentState('stop');
 };
 
-const startTimer = async (setCurrentState) => {
+export const startTimer = async (setCurrentState) => {
   const uri = `https://us-central1-toggl-nesthub-256523.cloudfunctions.net/togglProxy/api/v8/time_entries/start`;
   const data = {
     time_entry: {

@@ -14,4 +14,28 @@ app.intent('welcome', conv => {
   );
 });
 
+app.intent('start', conv => {
+  conv.ask('タイマーを開始します');
+  conv.ask(
+    new HtmlResponse({
+      url: 'https://toggl-nesthub.web.app/',
+      data: {
+        type: 'start'
+      }
+    })
+  );
+});
+
+app.intent('stop', conv => {
+  conv.ask('タイマーを停止します');
+  conv.ask(
+    new HtmlResponse({
+      url: 'https://toggl-nesthub.web.app/',
+      data: {
+        type: 'stop'
+      }
+    })
+  );
+});
+
 exports.toggleNestHub = functions.https.onRequest(app);
