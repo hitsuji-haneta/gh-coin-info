@@ -14,13 +14,14 @@ app.intent('welcome', conv => {
   );
 });
 
-app.intent('start', conv => {
+app.intent('start', (conv, { title }) => {
   conv.ask('タイマーを開始します');
   conv.ask(
     new HtmlResponse({
       url: 'https://toggl-nesthub.web.app/',
       data: {
-        type: 'start'
+        type: 'start',
+        title
       }
     })
   );

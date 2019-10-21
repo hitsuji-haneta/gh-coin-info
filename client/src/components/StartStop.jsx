@@ -1,6 +1,8 @@
 import React from 'react';
+import styled from 'styled-components';
 import useCurrentTask from '../hooks/useCurrentTask';
 import togglConfig from '../toggl-config.json';
+
 const apiToken = togglConfig.apiToken;
 if (!apiToken) throw Error('Set your api token to toggle-config.json');
 
@@ -9,6 +11,24 @@ const headers = {
   Authorization: `Basic ${encodedToken}`,
   'Content-Type': 'application/json'
 };
+
+const StartButton = styled.button`
+  background-color: #009193;
+  font-size: 1em;
+  color: white;
+  width: 30vh;
+  margin-top: 100px;
+  border-radius: 20px;
+`;
+
+const StopButton = styled.button`
+  background-color: #FF3B80;
+  font-size: 1em;
+  color: white;
+  width: 30vh;
+  margin-top: 100px;
+  border-radius: 20px;
+`;
 
 export const stopTimer = async (entryId, setCurrentState) => {
   const uri = `https://us-central1-toggl-nesthub-256523.cloudfunctions.net/togglProxy/api/v8/time_entries/${entryId}/stop`;
@@ -22,11 +42,11 @@ export const stopTimer = async (entryId, setCurrentState) => {
   setCurrentState('stop');
 };
 
-export const startTimer = async (setCurrentState) => {
+export const startTimer = async (setCurrentState, title) => {
   const uri = `https://us-central1-toggl-nesthub-256523.cloudfunctions.net/togglProxy/api/v8/time_entries/start`;
   const data = {
     time_entry: {
-      description: 'toggl managerの開発',
+      description: title,
       created_with: 'NestHub',
       pid: ''
     }
@@ -42,12 +62,12 @@ export const startTimer = async (setCurrentState) => {
   setCurrentState('running');
 };
 
-const StartStop = ({ isRunning, setCurrentState, entryId }) => {
+const StartStop = ({ isRunning, setCurrentState, entryId, title }) => {
   if (isRunning)
     return (
-      <button onClick={() => stopTimer(entryId, setCurrentState)}>stop</button>
+      <StopButton onClick={() => stopTimer(entryId, setCurrentState)}>stop</StopButton>
     );
-  return <button onClick={() => startTimer(setCurrentState)}>start</button>;
+  return <StartButton onClick={() => startTimer(setCurrentState, title)}>start</StartButton>;
 };
 
 export default StartStop;
