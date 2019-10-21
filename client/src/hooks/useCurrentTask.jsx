@@ -4,7 +4,7 @@ import togglConfig from '../toggl-config.json';
 
 const apiToken = togglConfig.apiToken;
 if (!apiToken) throw Error('Set your api token to toggle-config.json');
-const uri = 'https://www.toggl.com/api/v8/time_entries/current';
+const uri = 'https://us-central1-toggl-nesthub-256523.cloudfunctions.net/togglProxy/api/v8/time_entries/current';
 
 const useCurrentTask = currentState => {
   const [isRunning, setRunning] = useState(false);
@@ -22,6 +22,7 @@ const useCurrentTask = currentState => {
           Authorization: `Basic ${encodedToken}`
         }
       });
+      console.log(res);
       const resJson = await res.json();
       const data = resJson.data;
       console.log(data);

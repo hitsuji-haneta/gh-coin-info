@@ -1,0 +1,19 @@
+{
+  "name": "proxy",
+  "description": "Proxy server on GCF for toggl-nesthub",
+  "scripts": {
+    "deploy": "gcloud beta functions deploy togglProxy"
+  },
+  "engines": {
+    "node": "10"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http-proxy": "^1.18.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^0.1.6"
+  },
+  "private": true
+}

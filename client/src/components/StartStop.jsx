@@ -11,7 +11,7 @@ const headers = {
 };
 
 const stopTimer = async (entryId, setCurrentState) => {
-  const uri = `https://www.toggl.com/api/v8/time_entries/${entryId}/stop`;
+  const uri = `https://us-central1-toggl-nesthub-256523.cloudfunctions.net/togglProxy/api/v8/time_entries/${entryId}/stop`;
   const res = await fetch(uri, {
     method: 'PUT',
     headers
@@ -23,7 +23,7 @@ const stopTimer = async (entryId, setCurrentState) => {
 };
 
 const startTimer = async (setCurrentState) => {
-  const uri = `https://www.toggl.com/api/v8/time_entries/start`;
+  const uri = `https://us-central1-toggl-nesthub-256523.cloudfunctions.net/togglProxy/api/v8/time_entries/start`;
   const data = {
     time_entry: {
       description: 'toggl managerの開発',
@@ -41,13 +41,6 @@ const startTimer = async (setCurrentState) => {
   console.log(resData);
   setCurrentState('running');
 };
-
-// const startTimer = async () => {
-//   const uri = `https://us-central1-toggl-nesthub.cloudfunctions.net/togglProxy-api`;
-//   const res = await fetch(uri);
-//   const resJson = await res.json();
-//   console.log(resJson);
-// };
 
 const StartStop = ({ isRunning, setCurrentState, entryId }) => {
   if (isRunning)
